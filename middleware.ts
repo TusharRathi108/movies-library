@@ -1,10 +1,10 @@
 import authConfig from "@/auth.config";
 import NextAuth from "next-auth";
 import {
-  DEFAULT_LOGIN_REDIRECT,
   apiAuthPrefix,
   authRoutes,
   publicRoutes,
+  DEFAULT_LOGIN_REDIRECT,
 } from "@/routes/routes";
 
 const { auth } = NextAuth(authConfig);
@@ -35,5 +35,7 @@ export default auth((req) => {
 
 // Optionally, don't invoke Middleware on some paths
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|app/log-background.jpg).*)"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|aplog-background.jpg).*)",
+  ],
 };

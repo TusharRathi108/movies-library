@@ -10,5 +10,5 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   ...authConfig,
   session: { strategy: "jwt" },
-  providers: [GitHub, Google, Credentials],
+  providers: [GitHub, Google],
 });
