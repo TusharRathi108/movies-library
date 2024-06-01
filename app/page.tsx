@@ -23,7 +23,7 @@ export default function Home() {
             className="flex justify-center items-center space-x-2 btn mb-1 p-3 border-2 border-orange-900 text-center text-lg w-56  text-orange-900 font-mono rounded-lg transition ease-linear duration-450 hover:scale-105 hover:bg-orange-900/60 hover:text-white"
           >
             <AiOutlineLogin />
-            <Text>SIGN-IN</Text>
+            <Text>REGISTER</Text>
           </Link>
         </div>
       </section>
