@@ -1,4 +1,5 @@
-import { registerSchema } from "@/app/schema/registerSchema";
+import { UserSchema } from "@/schema/schema";
+import { getUserByEmail } from "@/data/user";
 import prisma from "@/prisma/client";
 import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
@@ -7,7 +8,7 @@ export async function POST(req: NextRequest) {
   try {
     // ensures data meets the criteria before processed or stored.
     const body = await req.json();
-    const validation = registerSchema.safeParse(body);
+    const validation = UserSchema.safeParse(body);
 
     // validates whether the inputs in the request body are valid or not.
     if (!validation.success)
@@ -20,11 +21,7 @@ export async function POST(req: NextRequest) {
     const hashPassword = await bcrypt.hash(password, 10);
 
     // check if email is taken or not.
-    const existingUser = await prisma.user.findUnique({
-      where: {
-        email,
-      },
-    });
+    const existingUser = await getUserByEmail(email);
 
     // returning error if user already exists.
     if (existingUser)

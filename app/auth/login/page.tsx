@@ -1,18 +1,19 @@
 "use client";
 import { Divider, Text } from "@chakra-ui/react";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { SubmitHandler, useForm } from "react-hook-form";
-import toast, { Toaster } from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { Toaster } from "react-hot-toast";
 import { AiOutlineLogin } from "react-icons/ai";
 import { BsGoogle } from "react-icons/bs";
 import { FiGithub } from "react-icons/fi";
-import { z } from "zod";
-import { registerSchema } from "../schema/registerSchema";
-
-type LoginFormData = z.infer<typeof registerSchema>;
 
 const LoginPage = () => {
+  // react hook form to submit new user details.
+  const { register, handleSubmit } = useForm();
+
+  // "POST" call to submit user info.
+  const onSubmit = (data: any) => console.log(data);
+
   return (
     <main className="bg-log-background bg-cover flex justify-center items-center w-full h-screen p-4">
       <section className="overflow-visible backdrop-blur-md bg-orange-600/30 shadow-lg rounded-lg realtive flex flex-col justify-start h-3.5/5 w-full md:w-3/6">
@@ -21,11 +22,15 @@ const LoginPage = () => {
         </div>
         <hr className="mt-4 border-4 border-orange-900/40" />
         <div className="border-b-4 rounded-lg border-none sm:border-orange-400/40 p-3 h-full flex flex-col justify-evenly">
-          <form className="flex flex-col space-y-5 justify-between">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col space-y-5 justify-between"
+          >
             <div className="flex flex-col lg:px-28">
               {/* EMAIL LABEL */}
               <input
                 type="email"
+                {...register("email")}
                 placeholder="jhondoe@gmail.com"
                 className="rounded-md p-3 font-mono"
               />
@@ -34,6 +39,7 @@ const LoginPage = () => {
               {/* PASSWORD LABEL */}
               <input
                 type="password"
+                {...register("password")}
                 placeholder="Password!"
                 className="rounded-md p-3 font-mono"
               />
@@ -63,7 +69,7 @@ const LoginPage = () => {
                 marginBottom={"2.5"}
               />
               <Link
-                href={"/register"}
+                href={"/auth/register"}
                 className="mb-2.5 italic font-bold font-mono underline text-orange-900"
               >
                 Register
