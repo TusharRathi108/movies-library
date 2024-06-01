@@ -12,15 +12,5 @@ export const registerSchema = z.object({
     .trim()
     .toLowerCase()
     .email({ message: "Enter a valid email!" }),
-  phoneNumber: z
-    .string()
-    .trim()
-    .min(10, "Enter a valid phone number!")
-    .max(10, "Enter a valid phone number!"),
-  password: z
-    .string()
-    .trim()
-    .toLowerCase()
-    .min(1, "password cannot be less than 6 letters!")
-    .max(25, "password cannot be more than 25 characters!"),
+  password: z.string().trim().toLowerCase(),
 });

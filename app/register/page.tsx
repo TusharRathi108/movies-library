@@ -1,18 +1,17 @@
 "use client";
 import { Text } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UserInfo } from "@prisma/client";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CSSProperties } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 import { AiOutlineLogin } from "react-icons/ai";
 import { BsGoogle } from "react-icons/bs";
 import { FiGithub } from "react-icons/fi";
 import { z } from "zod";
 import { registerSchema } from "../schema/registerSchema";
-import toast, { Toaster } from "react-hot-toast";
 
 const textStyle: CSSProperties = {
   textDecoration: "underline",
@@ -22,7 +21,7 @@ const textStyle: CSSProperties = {
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
-const RegisterPage = ({ user }: { user?: UserInfo }) => {
+const RegisterPage = () => {
   // for redirection purpose.
   const router = useRouter();
 
@@ -34,8 +33,8 @@ const RegisterPage = ({ user }: { user?: UserInfo }) => {
   // "POST" call to submit user info.
   const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
     try {
-      await axios.post("/api/register-user", data);
-      router.push("/login");
+      await axios.post("http://localhost:3000/api/register-user", data);
+      router.push("/dashboard");
     } catch (e) {
       console.log("Error: ", e);
       toast.error("An error has occured!");
@@ -65,12 +64,6 @@ const RegisterPage = ({ user }: { user?: UserInfo }) => {
                 type="text"
                 {...register("email")}
                 placeholder="jhondoe@gmail.com"
-                className="mt-1 mb-1 p-3 w-full font-mono rounded-lg"
-              />
-              <input
-                type="text"
-                {...register("phoneNumber")}
-                placeholder="Phone Number"
                 className="mt-1 mb-1 p-3 w-full font-mono rounded-lg"
               />
               <input

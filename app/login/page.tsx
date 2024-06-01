@@ -1,9 +1,16 @@
+"use client";
 import { Divider, Text } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import React from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 import { AiOutlineLogin } from "react-icons/ai";
 import { BsGoogle } from "react-icons/bs";
 import { FiGithub } from "react-icons/fi";
+import { z } from "zod";
+import { registerSchema } from "../schema/registerSchema";
+
+type LoginFormData = z.infer<typeof registerSchema>;
 
 const LoginPage = () => {
   return (
@@ -18,28 +25,28 @@ const LoginPage = () => {
             <div className="flex flex-col lg:px-28">
               {/* EMAIL LABEL */}
               <input
-                className="rounded-md p-3 font-mono"
                 type="email"
                 placeholder="jhondoe@gmail.com"
+                className="rounded-md p-3 font-mono"
               />
             </div>
             <div className="flex flex-col lg:px-28">
               {/* PASSWORD LABEL */}
               <input
-                className="rounded-md p-3 font-mono"
                 type="password"
                 placeholder="Password!"
+                className="rounded-md p-3 font-mono"
               />
             </div>
             <div className="flex justify-center items-center">
               {/* BUTTON or Forget Password */}
-              <Link
-                href={"/dashboard"}
+              <button
+                type="submit"
                 className="flex justify-center items-center space-x-2 p-3 btn border-2 border-orange-900 text-center text-lg w-56 sm:w-72 text-orange-900 font-mono rounded-lg transition ease-linear duration-450 hover:scale-105 hover:bg-orange-900/60 hover:text-white"
               >
                 <AiOutlineLogin />
                 <Text>LOG-IN</Text>
-              </Link>
+              </button>
             </div>
             <div className="flex space-x-1.5 justify-center items-center">
               <Link
@@ -82,6 +89,7 @@ const LoginPage = () => {
           </div>
         </div>
       </section>
+      <Toaster />
     </main>
   );
 };
