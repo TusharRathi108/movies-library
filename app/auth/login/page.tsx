@@ -1,8 +1,8 @@
 "use client";
 
-import { login } from "@/app/api/login-user/route";
 import { Divider, Text } from "@chakra-ui/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { Toaster } from "react-hot-toast";
 import { AiOutlineLogin } from "react-icons/ai";
@@ -12,6 +12,7 @@ import { FiGithub } from "react-icons/fi";
 const LoginPage = () => {
   // react hook form to submit new user details.
   const { register, handleSubmit } = useForm();
+  const router = useRouter();
 
   // "POST" call to submit user info.
   const onSubmit = (data: any) => console.log(data);
