@@ -37,17 +37,8 @@ const RegisterPage = () => {
       // posting data to backend using axios.
       await axios.post("http://localhost:3000/api/register-user", data);
 
-      // sign in if credentials are good.
-      signIn("credentials", {
-        data,
-        redirect: false,
-      });
-
       // shows toast notification.
       toast.success("User created successfully!");
-
-      // directs to the dashboard.
-      router.push("/auth/login");
     } catch (err) {
       // showing error if user already exists.
       toast.error("User already exists!");
@@ -55,7 +46,7 @@ const RegisterPage = () => {
   };
   return (
     <main className="bg-log-background bg-cover flex justify-center items-center w-full h-screen p-4">
-      <section className="overflow-visible backdrop-blur-md bg-orange-600/30 shadow-lg rounded-lg realtive flex flex-col justify-start h-3.5/5 w-full md:w-3/6">
+      <section className="overflow-visible backdrop-blur-md bg-orange-600/30 shadow-lg rounded-lg realtive flex flex-col justify-start h-4/6 w-full md:w-3/6">
         <div className="antialiased hover:subpixel-antialiased uppercase font-bold font-mono text-5xl 2xl:text-8xl text-yellow-950/80 text-center mt-5">
           register yourself!
         </div>
@@ -103,28 +94,28 @@ const RegisterPage = () => {
                   </Link>
                 </div>
               </div>{" "}
+              <hr className="mb-3 sm:mt-1 w-full border-2 border-orange-900/80" />
+              {/* BUTTONS */}
+              <div className="p-2 row-span-0 justify-center items-center flex flex-row space-x-3">
+                <Link
+                  href=""
+                  className="flex justify-center items-center space-x-2 p-3 border-2 border-orange-900 text-center text-lg w-48 text-orange-900 font-mono rounded-lg transition ease-linear duration-450 hover:scale-105 hover:bg-orange-900/60 hover:text-white"
+                >
+                  <BsGoogle />
+                  <Text>GOOGLE</Text>
+                </Link>
+                <Link
+                  href=""
+                  className="flex justify-center items-center space-x-2 p-3 border-2 border-orange-900 text-center text-lg w-48 text-orange-900 font-mono rounded-lg transition ease-linear duration-450 hover:scale-105 hover:bg-orange-900/60 hover:text-white"
+                >
+                  <FiGithub />
+                  <Text>GITHUB</Text>
+                </Link>
+              </div>{" "}
+              {/* OAuth Buttons */}
             </form>
           </div>{" "}
           {/* FORM */}
-          <hr className="mb-3 sm:mt-1 w-full border-2 border-orange-900/80" />
-          {/* BUTTONS */}
-          <div className="p-2 row-span-0 justify-center items-center flex flex-row space-x-3">
-            <Link
-              href=""
-              className="flex justify-center items-center space-x-2 p-3 border-2 border-orange-900 text-center text-lg w-48 text-orange-900 font-mono rounded-lg transition ease-linear duration-450 hover:scale-105 hover:bg-orange-900/60 hover:text-white"
-            >
-              <BsGoogle />
-              <Text>GOOGLE</Text>
-            </Link>
-            <Link
-              href=""
-              className="flex justify-center items-center space-x-2 p-3 border-2 border-orange-900 text-center text-lg w-48 text-orange-900 font-mono rounded-lg transition ease-linear duration-450 hover:scale-105 hover:bg-orange-900/60 hover:text-white"
-            >
-              <FiGithub />
-              <Text>GITHUB</Text>
-            </Link>
-          </div>{" "}
-          {/* OAuth Buttons */}
         </div>
       </section>
     </main>
