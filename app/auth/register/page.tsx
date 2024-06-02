@@ -1,16 +1,17 @@
 "use client";
 import { Text } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { CSSProperties } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { SubmitHandler, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { AiOutlineLogin } from "react-icons/ai";
 import { BsGoogle } from "react-icons/bs";
 import { FiGithub } from "react-icons/fi";
-
 import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { UserSchema } from "../../../schema/schema";
 
 const textStyle: CSSProperties = {
@@ -27,14 +28,29 @@ const RegisterPage = () => {
     resolver: zodResolver(UserSchema),
   });
 
+  // using the router to redirect to login page.
+  const router = useRouter();
+
   // "POST" call to submit user info.
   const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
     try {
+      // posting data to backend using axios.
       await axios.post("http://localhost:3000/api/register-user", data);
+
+      // sign in if credentials are good.
+      signIn("credentials", {
+        data,
+        redirect: false,
+      });
+
+      // shows toast notification.
       toast.success("User created successfully!");
-    } catch (e) {
-      console.log("Error: ", e);
-      toast.error("An error has occured!");
+
+      // directs to the dashboard.
+      router.push("/auth/login");
+    } catch (err) {
+      // showing error if user already exists.
+      toast.error("User already exists!");
     }
   };
   return (
@@ -77,7 +93,10 @@ const RegisterPage = () => {
                     <AiOutlineLogin />
                     <Text>REGISTER</Text>
                   </button>
-                  <Link className="flex space-x-1.5 mt-5 mb-2" href="/auth/login">
+                  <Link
+                    className="flex space-x-1.5 mt-5 mb-2"
+                    href="/auth/login"
+                  >
                     <Text color={"orange.900"} style={textStyle}>
                       Existing User?
                     </Text>
@@ -108,7 +127,6 @@ const RegisterPage = () => {
           {/* OAuth Buttons */}
         </div>
       </section>
-      <Toaster />
     </main>
   );
 };

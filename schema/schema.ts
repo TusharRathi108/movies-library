@@ -14,3 +14,12 @@ export const UserSchema = z.object({
     .email({ message: "Enter a valid email!" }),
   password: z.string().trim().toLowerCase(),
 });
+
+export const SignInSchema = z.object({
+  email: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .email({ message: "Enter a valid email!" }),
+  password: z.string().trim().toLowerCase(),
+});

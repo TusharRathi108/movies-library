@@ -1,21 +1,48 @@
 "use client";
 
+import { SignInSchema } from "@/schema/schema";
 import { Divider, Text } from "@chakra-ui/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
-import { Toaster } from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 import { AiOutlineLogin } from "react-icons/ai";
 import { BsGoogle } from "react-icons/bs";
 import { FiGithub } from "react-icons/fi";
+import { z } from "zod";
+
+type LoginSchema = z.infer<typeof SignInSchema>;
 
 const LoginPage = () => {
   // react hook form to submit new user details.
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<LoginSchema>({
+    resolver: zodResolver(SignInSchema),
+  });
+
+  // use router to redirect to the dashboard after successfull login
   const router = useRouter();
 
   // "POST" call to submit user info.
-  const onSubmit = (data: any) => console.log(data);
+  const onSubmit: SubmitHandler<LoginSchema> = async ({ email, password }) => {
+    const login = await signIn("credentials", {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (login?.ok) {
+      // on success show the message of successfull login.
+      toast.success("Welcome-login successfull!");
+      // redirect to the dashboard.
+      router.push("/dashboard");
+    }
+
+    if (login?.error) {
+      toast.error(login.error);
+    }
+  };
 
   return (
     <main className="bg-log-background bg-cover flex justify-center items-center w-full h-screen p-4">
