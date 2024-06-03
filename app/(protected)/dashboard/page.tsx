@@ -23,7 +23,7 @@ const DashboardPage = () => {
     const fetchMovie = async () => {
       try {
         const response = await axios.get<MovieData>(
-          `http://www.omdbapi.com/?t=${searchTerm}&&apikey=1450402c`
+          `https://www.omdbapi.com/?t=${searchTerm}&&apikey=1450402c`
         );
         console.log(response.data);
         setData(response.data);
