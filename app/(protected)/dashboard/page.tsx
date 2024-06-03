@@ -7,7 +7,6 @@ import { MovieData } from "@/utils/Movie";
 import { Button, Center, Image, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { date } from "zod";
 
 const DashboardPage = () => {
   // opening and closing the side-bar.
@@ -23,12 +22,11 @@ const DashboardPage = () => {
   useEffect(() => {
     const fetchMovie = async () => {
       try {
-        const movie = await axios.get<MovieData>(
-          `http://www.omdbapi.com/?s=${searchTerm}&&apikey=1450402c`
+        const response = await axios.get<MovieData>(
+          `http://www.omdbapi.com/?t=${searchTerm}&&apikey=1450402c`
         );
-        setData(movie.data);
-
-        console.log(movie.data);
+        console.log(response.data);
+        setData(response.data);
       } catch (e) {
         console.log(e);
       }
@@ -45,23 +43,23 @@ const DashboardPage = () => {
         {data && (
           <div className="felx-1 p-4 grid-cols-1 grid md:grid-cols-2">
             <div className="flex justify-center p-10 my-10">
-              <Image src={"/"} alt={"Poster of the movie will applera here!"} />
+              <Image src={data.Poster} alt={"Poster of the movie will applera here!"} />
             </div>
             <div className="flex flex-col justify-center shadow-md rounded-2xl text-white bg-slate-200">
               <Center>
                 <Text className="mt-5 text-2xl text-slate-900 uppercase font-medium">
                   {" "}
-                  Movie Name: {}
+                  Movie Name: {data.Title}
                 </Text>
               </Center>
               <div className="text-slate-900 text-xl p-2 ml-4">
-                <h1> Title: {} </h1>
-                <h1> Awards: {} </h1>
-                <h1> BoxOffice: {} </h1>
-                <h1> Genre: {} </h1>
-                <h1> Country: {} </h1>
+                <h1> Title: {data?.Title} </h1>
+                <h1> Awards: {data?.Awards} </h1>
+                <h1> BoxOffice: {data?.BoxOffice} </h1>
+                <h1> Genre: {data?.Genre} </h1>
+                <h1> Country: {data?.Country} </h1>
                 <Center>
-                  <p>{}</p>
+                  <p>{data?.Plot}</p>
                 </Center>
               </div>
             </div>
