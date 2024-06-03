@@ -23,3 +23,14 @@ export const SignInSchema = z.object({
     .email({ message: "Enter a valid email!" }),
   password: z.string().trim().toLowerCase(),
 });
+
+export const MovieSchema = z.object({
+  title: z.string().trim().optional(),
+  awards: z.string().trim().optional(),
+  boxOffice:z.string().trim().optional(),
+  genre: z.string().trim().optional(),
+  country: z.string().trim().optional(),
+  plot: z.string().trim().optional(),
+  poster: z.string().trim().optional(),
+  userEmail: z.string().trim().optional(),
+});

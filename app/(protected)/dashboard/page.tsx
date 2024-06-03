@@ -1,45 +1,81 @@
 "use client";
-import React, { useState } from "react";
-import { MdOutlineLocalMovies } from "react-icons/md";
-import { BsArrowLeftShort, BsSearch } from "react-icons/bs";
-import Link from "next/link";
-import { Search2Icon } from "@chakra-ui/icons";
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
-import NavBar from "@/components/NavBar";
+import NavBarComponent from "@/components/NavBar";
+import SideBarComponent from "@/components/SideBar";
+import useSearch from "@/providers/SearchProvider";
+import { MovieSchema } from "@/utils/Movie";
+import { Button, Center, Image, Spacer, Text } from "@chakra-ui/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const DashboardPage = () => {
   // opening and closing the side-bar.
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+
+  // getting the name of the movie from input field.
+  const { searchTerm, userEmail } = useSearch();
+
+  console.log(userEmail);
+
+  // setting the data from the api.
+  const [data, setData] = useState<MovieSchema>();
+
+  // using effect hook to get the movie.
+  useEffect(() => {
+    const fetchMovie = async () => {
+      if (!searchTerm) return null;
+      try {
+        const response: MovieSchema = await axios.get(
+          `http://www.omdbapi.com/?t=${searchTerm}&&apikey=1450402c`
+        );
+        setData(response);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    fetchMovie();
+  }, [searchTerm]);
+
+  // added to playlist.
+
   return (
     <div className="flex">
-      <div
-        className={`bg-slate-900 h-screen p-5 pt-8 ${
-          open ? "w-60" : "w-24"
-        } duration-300 relative backdrop-blur-0`}
-      >
-        <BsArrowLeftShort
-          className={`bg-slate-300 text-slate-800 text-3xl border rounded-full border-2 border-slate-900
-        absolute -right-3 top-9 cursor-pointer ${!open && "rotate-180"}`}
-          onClick={() => setOpen(!open)}
-        />
-        <div className="inline-flex gap-2">
-          <MdOutlineLocalMovies
-            className={`bg-slate-300 text-4xl rounded-md p-1 cursor-pointer block float-left ml-2 top-5 duration-700 ${
-              open && "rotate-[360deg]"
-            }`}
-          />
-          <h1
-            className={`text-white origin-left font-medium text-2xl duration-300 ${
-              !open && "scale-0"
-            }`}
-          >
-            RAPHSODY
-          </h1>
-        </div>
-      </div>
-      <div className="flex flex-col flex-1">
-        <NavBar />
-        <div className="p-5">Dashbaoard</div>
+      <SideBarComponent open={open} setOpen={setOpen} />
+      <div className="flex flex-col gap-3 flex-1">
+        <NavBarComponent />
+        {data?.data && (
+          <div className="felx-1 p-4 grid-cols-1 grid md:grid-cols-2">
+            <div className="flex justify-center p-10 my-10">
+              <Image
+                src={data.data.Poster}
+                alt={"Poster of the movie will applera here!"}
+              />
+            </div>
+            <div className="flex flex-col justify-center shadow-md rounded-2xl text-white bg-slate-200">
+              <Center>
+                <Text className="mt-5 text-2xl text-slate-900 uppercase font-medium">
+                  {" "}
+                  Movie Name: {data?.data.Title}
+                </Text>
+              </Center>
+              <div className="text-slate-900 text-xl p-2 ml-4">
+                <h1> Title: {data?.data.Title} </h1>
+                <h1> Awards: {data?.data.Awards} </h1>
+                <h1> BoxOffice: {data?.data.BoxOffice} </h1>
+                <h1> Genre: {data?.data.Genre} </h1>
+                <h1> Country: {data?.data.Country} </h1>
+                <Center>
+                  <p>{data?.data.Plot}</p>
+                </Center>
+              </div>
+            </div>
+          </div>
+        )}
+        <Center>
+          <Button colorScheme="teal" variant="outline">
+            ADD TO PLAYLIST
+          </Button>
+        </Center>
       </div>
     </div>
   );
