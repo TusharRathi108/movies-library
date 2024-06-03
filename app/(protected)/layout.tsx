@@ -12,9 +12,9 @@ const ProtectLayout = async ({ children }: ProtectLayoutProps) => {
   const session = await getServerSession(authOptions);
 
   // force the user to login.
-  if (!session?.user?.email) {
-    redirect("/auth/login");
-  }
+  // if (!session?.user?.email) {
+  //   redirect("/auth/login");
+  // }
 
   return <main>{children}</main>;
 };
