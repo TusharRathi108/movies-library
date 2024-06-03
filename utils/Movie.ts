@@ -8,6 +8,6 @@ export interface MovieData {
   Poster: string;
 }
 
-export interface MovieSchema {
-  data: MovieData;
-}
+// export interface MovieSchema {
+//   data: MovieData;
+// }

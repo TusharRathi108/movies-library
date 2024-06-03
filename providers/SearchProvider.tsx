@@ -5,7 +5,6 @@ import React, { createContext, useContext, useState } from "react";
 interface SearchProviderProps {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
-  userEmail: string | null;
 }
 
 const SearchContext = createContext<SearchProviderProps | "">("");
@@ -21,13 +20,12 @@ const useSearch = () => {
 
 interface ProviderProps {
   children: React.ReactNode;
-  userEmail: string;
 }
 
-export const SearchProvider = ({ children, userEmail }: ProviderProps) => {
+export const SearchProvider = ({ children }: ProviderProps) => {
   const [searchTerm, setSearchTerm] = useState<string>(" ");
   return (
-    <SearchContext.Provider value={{ searchTerm, setSearchTerm, userEmail }}>
+    <SearchContext.Provider value={{ searchTerm, setSearchTerm }}>
       {children}
     </SearchContext.Provider>
   );

@@ -19,7 +19,7 @@ const ProtectLayout = async ({ children }: ProtectLayoutProps) => {
 
   return (
     <main>
-      <SearchProvider userEmail={session.user.email}>{children}</SearchProvider>
+      <SearchProvider>{children}</SearchProvider>
     </main>
   );
 };
