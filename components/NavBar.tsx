@@ -1,7 +1,7 @@
 import useSearch from "@/providers/SearchProvider";
 import { Search2Icon } from "@chakra-ui/icons";
 import { Button, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
-import Link from "next/link";
+import { signOut } from "next-auth/react";
 import React from "react";
 
 const NavBarComponent = () => {
@@ -28,13 +28,14 @@ const NavBarComponent = () => {
           />
         </InputGroup>
       </div>
-      <Link
-        href={"/playlist"}
+      <Button
+        onClick={() => signOut()}
+        colorScheme="red"
         className="rounded-xl border-solid border-2 border-slate-900 p-2  font-medium text-slate-900 bg-slate-100"
       >
         {""}
-        Playlist{""}
-      </Link>
+        Logout{""}
+      </Button>
     </div>
   );
 };

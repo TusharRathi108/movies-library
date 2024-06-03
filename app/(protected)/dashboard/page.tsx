@@ -43,7 +43,7 @@ const DashboardPage = () => {
         {data && (
           <div className="felx-1 p-4 grid-cols-1 grid md:grid-cols-2">
             <div className="flex justify-center p-10 my-10">
-              <Image src={data.Poster} alt={"Poster of the movie will applera here!"} />
+              <Image src={data.Poster} alt={"Poster of the movie will applera here!"} className="rounded-xl shadow-md" />
             </div>
             <div className="flex flex-col justify-center shadow-md rounded-2xl text-white bg-slate-200">
               <Center>
