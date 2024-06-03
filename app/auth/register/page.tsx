@@ -35,7 +35,10 @@ const RegisterPage = () => {
   const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
     try {
       // posting data to backend using axios.
-      await axios.post("http://localhost:3000/api/register-user", data);
+      await axios.post(
+        "https://movies-library-kohl.vercel.app/api/register-user",
+        data
+      );
 
       // shows toast notification.
       toast.success("User created successfully!");
