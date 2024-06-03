@@ -14,7 +14,7 @@ const SideBarComponent = ({ open, setOpen }: SidebarProps) => {
       } duration-300 relative backdrop-blur-0`}
     >
       <BsArrowLeftShort
-        className={`bg-slate-300 text-slate-800 text-3xl border rounded-full border-2 border-slate-900
+        className={`bg-slate-300 text-slate-800 text-3xl rounded-full border-2 border-slate-900
         absolute -right-3 top-9 cursor-pointer ${!open && "rotate-180"}`}
         onClick={() => setOpen(!open)}
       />
